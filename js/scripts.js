@@ -1,8 +1,13 @@
-// ------------------------------------------
-//  FETCH FUNCTIONS
-// ------------------------------------------
 let data;
+let person;
+let i;
+//search markup
+let formAction = `<form action="#" method="get">
+                    <input type="search" id="search-input" class="search-input" placeholder="Search...">
+                    <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
+                  </form>`
 
+$('.search-container').append(formAction);
 
 fetch('https://randomuser.me/api/?results=12&nat=us')
    .then(response => response.json())
@@ -15,8 +20,8 @@ fetch('https://randomuser.me/api/?results=12&nat=us')
       let first = person.name.first;
       let last = person.name.last;
       let email = person.email;
-      let city = person.city;
-      let state = person.state;
+      let city = person.location.city;
+      let state = person.location.state;
       
       //gallery markup
       let galleryCard = 
@@ -30,34 +35,51 @@ fetch('https://randomuser.me/api/?results=12&nat=us')
             <p class="card-text cap">${city}, ${state}</p>
         </div>
       </div>`
-        $('.gallery').append(galleryCard);
-      })
+        $('.gallery').append(galleryCard);     
+      })        
+      
+        $(".card").click(function(e) {
+            //modalMarkup(jsonArray[0]);
+            console.log(modalMarkup())
+        });
    })
 
-//search markup
-let formAction = `<form action="#" method="get">
-                    <input type="search" id="search-input" class="search-input" placeholder="Search...">
-                    <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
-                  </form>`
-
-$('.search-container').append(formAction);
 
 
-//modal markup -- function then event listner
+//modal markup
 
-let modalcontainer = `<div class="modal-container">
-              <div class="modal">
-                  <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
-                  <div class="modal-info-container">
-                      <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
-                      <h3 id="name" class="modal-name cap">name</h3>
-                      <p class="modal-text">email</p>
-                      <p class="modal-text cap">city</p>
-                      <hr>
-                      <p class="modal-text">(555) 555-5555</p>
-                      <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
-                      <p class="modal-text">Birthday: 10/21/2015</p>
-                  </div>
-              </div>`;
+function modalMarkup(i) {
+  //append modal html to body
+  $('body').append(
+    `<div class="modal-container"> 
+        <div class="modal">
+          <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+          <div class="modal-info-container">
+            <img class="modal-img" src = "${jsonArray[i].picture.large}" alt="profile picture">
+            <h3 id="name" class="modal-name cap">${jsonArray[i].name.first} ${jsonArray[i].name.last}</h3>
+            <p class="modal-text">${jsonArray[i].email}</p>
+            <p class="modal-text cap">${jsonArray[i].location.city}</p>
+            <hr>
+            <p class="modal-text">${jsonArray[i].phone}</p>
+            <p class="modal-text cap">${jsonArray[i].location.street}, ${jsonArray[i].location.city}, ${jsonArray[i].location.state}, ${jsonArray[i].location.postcode}</p>
+            <p class="modal-text">Birthday: ${jsonArray[i].dob.date.slice(5, 7) + "/" + jsonArray[i].dob.date.slice(8, 10) + "/" + jsonArray[i].dob.date.slice(0, 4)}</p>                   
+        </div>
+    </div>`)
 
-//$('body').append(modalcontainer);
+    //Click Event listener to close when i button is clicked
+    $("#modal-close-btn").click(function () {
+        $('.modal-container').remove()
+    });
+ }  
+  //Click Event Listener to display the modal when a employee card is clicked
+
+
+// $("#gallery").on("click", ".card", function () {
+//   i = ($(this).index())                   //the index value for employee
+//   modalMarkup(i);                           
+// })
+
+ $("#gallery").on("click", ".card", function () {
+  i = ($(this).index())                   //the index value for employee
+  modalMarkup(i);                           
+})
