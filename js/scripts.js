@@ -37,11 +37,6 @@ fetch('https://randomuser.me/api/?results=12&nat=us')
       </div>`
         $('.gallery').append(galleryCard);     
       })        
-      
-        $(".card").click(function(e) {
-            //modalMarkup(jsonArray[0]);
-            console.log(modalMarkup())
-        });
    })
 
 
@@ -70,14 +65,10 @@ function modalMarkup(i) {
     $("#modal-close-btn").click(function () {
         $('.modal-container').remove()
     });
- }  
+}  
+
+
   //Click Event Listener to display the modal when a employee card is clicked
-
-
-// $("#gallery").on("click", ".card", function () {
-//   i = ($(this).index())                   //the index value for employee
-//   modalMarkup(i);                           
-// })
 
  $("#gallery").on("click", ".card", function () {
   i = ($(this).index())                   //the index value for employee
