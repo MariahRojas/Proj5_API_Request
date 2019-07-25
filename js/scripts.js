@@ -1,21 +1,19 @@
+// Variables that havent been assigned yet. 
+
 let data;
 let person;
 let i;
-/* //search markup
-let formAction = `<form action="#" method="get">
-                    <input type="search" id="search-input" class="search-input" placeholder="Search...">
-                    <input type="submit" value="&#x1F50D;" id="serach-submit" class="search-submit">
-                  </form>`
 
-$('.search-container').append(formAction); */
+// Fetch API 
 
 fetch('https://randomuser.me/api/?results=12&nat=us')
    .then(response => response.json())
-   //.then(response => console.log(response))
-   //.then(data => console.log(data.results))
+   //.then(response => console.log(response)) // checks response
+   //.then(data => console.log(data))
+   //.then(data => console.log(data.results)) // checks data
    .then(function (data) {
-    jsonArray = data.results
-    jsonArray.forEach(person =>{
+    jsonArray = data.results //results 
+    jsonArray.forEach(person =>{ // iterates through results array placing employee's info in each template literal
       let picture = person.picture.large;
       let first = person.name.first;
       let last = person.name.last;
@@ -43,7 +41,7 @@ fetch('https://randomuser.me/api/?results=12&nat=us')
 
 //modal markup
 
-function modalMarkup(i) {
+function modalMarkup(i) { 
   //append modal html to body
   $('body').append(
     `<div class="modal-container"> 
@@ -61,7 +59,7 @@ function modalMarkup(i) {
         </div>
     </div>`)
 
-    //Click Event listener to close when i button is clicked
+    // closes modal when x button is clicked.
     $("#modal-close-btn").click(function () {
         $('.modal-container').remove()
     });
@@ -70,9 +68,9 @@ function modalMarkup(i) {
 
   //Click Event Listener to display the modal when a employee card is clicked
 
- $("#gallery").on("click", ".card", function () {
-  i = ($(this).index())                   //the index value for employee
-  modalMarkup(i);                           
+ $("#gallery").on("click", ".card", function () {  // listens for a click in the gallery when employee is clicked
+  i = ($(this).index()) // the index value for employee that was clicked
+  modalMarkup(i); // call modal mark up                         
 })
 
 
@@ -80,7 +78,7 @@ function modalMarkup(i) {
 
 
 
-
+// Background 
 // resource: https://speckyboy.com/css-background-effects/
 var colors = new Array(
   [62,35,255],
